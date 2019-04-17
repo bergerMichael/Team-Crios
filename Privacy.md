@@ -1,4 +1,5 @@
 Privacy Policy
+
 Team Crios built the Gods of Calamity app as a Free app. This SERVICE is provided by Team Crios at no cost and is intended for use as is.
 
 This page is used to inform visitors regarding the policies with the collection, use, and disclosure of Personal Information if anyone 
