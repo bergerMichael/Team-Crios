@@ -8,5 +8,5 @@ decided to use the Service.
 The service does not collect any personal information.
 
 
-Team may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. 
+Team Crios may update the Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. 
 These changes are effective immediately after they are posted on this page.
