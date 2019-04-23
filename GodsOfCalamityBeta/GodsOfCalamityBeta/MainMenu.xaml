@@ -20,6 +20,9 @@
             <Button x:Name="startGame" Content="Begin Game" BorderBrush="White" Foreground="White"
                 FontFamily="Castellar" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Top" Height="196" Width="614" 
                 gaze:GazeInput.DwellDuration="00:00:01.500"/>
+            <Button x:Name="exitGame" Content="Exit Game" BorderBrush="White" Foreground="White"
+                FontFamily="Castellar" FontSize="60" HorizontalAlignment="Center" VerticalAlignment="Top" Height="196" Width="614"
+                gaze:GazeInput.DwellDuration="00:00:01.500"/>
         </Canvas>
     </Grid>
 </Page>

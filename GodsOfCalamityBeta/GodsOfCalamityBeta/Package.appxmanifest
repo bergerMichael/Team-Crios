@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="23993TeamCrios.GodsofCalamity" Publisher="CN=8B0321FA-F868-48C6-A6C1-2657AFA50241" Version="1.0.2.0" />
+  <Identity Name="23993TeamCrios.GodsofCalamity" Publisher="CN=8B0321FA-F868-48C6-A6C1-2657AFA50241" Version="1.0.5.0" />
   <mp:PhoneIdentity PhoneProductId="6617f017-3508-46cc-9a61-8b806f8a8d27" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Gods of Calamity</DisplayName>

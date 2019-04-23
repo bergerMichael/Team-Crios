@@ -28,6 +28,7 @@ namespace GodsOfCalamityBeta
     {
 		readonly Game1 _game;
         public Dictionary<int, UserControl> DisasterUCDictionary = new Dictionary<int, UserControl>(); // List of usercontrols in dictionary by their associated entityID
+        public Windows.Graphics.Display.DisplayInformation display = Windows.Graphics.Display.DisplayInformation.GetForCurrentView();
 
         public GamePage()
         {
@@ -49,10 +50,10 @@ namespace GodsOfCalamityBeta
             // Create the game.
             var launchArguments = string.Empty;
             _game = MonoGame.Framework.XamlGame<Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
-            swapChainPanel.Height = Game1.screenHeight;
-            GameSpace.Height = Game1.screenHeight;
-            swapChainPanel.Width = Game1.screenWidth;
-            GameSpace.Width = Game1.screenWidth;
+            swapChainPanel.Height = ApplicationView.GetForCurrentView().VisibleBounds.Height;
+            GameSpace.Height = ApplicationView.GetForCurrentView().VisibleBounds.Height;
+            swapChainPanel.Width = ApplicationView.GetForCurrentView().VisibleBounds.Width;
+            GameSpace.Width = ApplicationView.GetForCurrentView().VisibleBounds.Width;
             swapChainPanel.Margin = new Thickness(0, 0, 0, 0);
             GameSpace.Margin = new Thickness(0, 0, 0, 0);
             Canvas.SetZIndex(GameSpace, 7);
@@ -61,14 +62,14 @@ namespace GodsOfCalamityBeta
             
             pauseButton.Content = "Pause Game";
             pauseButton.FontFamily = new FontFamily("Castellar");
-            pauseButton.FontSize = 48;
+            pauseButton.FontSize = 48 / display.RawPixelsPerViewPixel;
             double buttonWidthFactor = 0.2;
             double buttonHeightFactor = 0.15;
-            pauseButton.Height = (int)(buttonHeightFactor * (double)Game1.screenHeight);
-            pauseButton.Width = (int)(buttonWidthFactor * (double)Game1.screenWidth);
+            pauseButton.Height = (int)(buttonHeightFactor * GameSpace.Height);
+            pauseButton.Width = (int)(buttonWidthFactor * GameSpace.Width);
             Thickness buttonMargin = new Thickness();
-            buttonMargin.Top = Game1.screenHeight - pauseButton.Height * 1.25;
-            buttonMargin.Left = (Game1.screenWidth * .5) - (pauseButton.Width * .5);
+            buttonMargin.Top = GameSpace.Height - pauseButton.Height * 1.25;
+            buttonMargin.Left = (GameSpace.Width * .5) - (pauseButton.Width * .5);
             pauseButton.Margin = buttonMargin;
             pauseButton.Click += PauseButton_Click;
 
@@ -79,16 +80,16 @@ namespace GodsOfCalamityBeta
             resumeButton.FontFamily = new FontFamily("Castellar");
             exitButton.FontFamily = new FontFamily("Castellar");
 
-            resumeButton.FontSize = 45;
-            exitButton.FontSize = 45;
+            resumeButton.FontSize = 45 / display.RawPixelsPerViewPixel;
+            exitButton.FontSize = 45 / display.RawPixelsPerViewPixel;
 
-            resumeButton.Height = (int)(buttonHeightFactor * (double)Game1.screenHeight);
-            resumeButton.Width = (int)(buttonWidthFactor * (double)Game1.screenWidth);
-            exitButton.Height = (int)(buttonHeightFactor * (double)Game1.screenHeight);
-            exitButton.Width = (int)(buttonWidthFactor * (double)Game1.screenWidth);
+            resumeButton.Height = (int)(buttonHeightFactor * GameSpace.Height);
+            resumeButton.Width = (int)(buttonWidthFactor * GameSpace.Width);
+            exitButton.Height = (int)(buttonHeightFactor * GameSpace.Height);
+            exitButton.Width = (int)(buttonWidthFactor * GameSpace.Width);
 
-            Thickness restartMargin = new Thickness(Game1.screenWidth * .33 - (resumeButton.Width * .5), Game1.screenHeight - resumeButton.Height * 1.25, 0, 0);
-            Thickness exitMargin = new Thickness(Game1.screenWidth * .66 - (exitButton.Width * .5), Game1.screenHeight - exitButton.Height * 1.25, 0, 0);
+            Thickness restartMargin = new Thickness(GameSpace.Width * .33 - (resumeButton.Width * .5), GameSpace.Height - resumeButton.Height * 1.25, 0, 0);
+            Thickness exitMargin = new Thickness(GameSpace.Width * .66 - (exitButton.Width * .5), GameSpace.Height - exitButton.Height * 1.25, 0, 0);
 
             resumeButton.Margin = restartMargin;
             exitButton.Margin = exitMargin;
@@ -100,15 +101,15 @@ namespace GodsOfCalamityBeta
             exitButton.Visibility = Visibility.Collapsed;
 
             //Define the village button
-            Village.Height = 256;
-            Village.Width = 256;
+            Village.Height = 256 / display.RawPixelsPerViewPixel;
+            Village.Width = 256 / display.RawPixelsPerViewPixel;
             Thickness villageMargin = new Thickness();
-            villageMargin.Top = Game1.screenHeight / 2 - Village.Height / 2;
-            villageMargin.Left = Game1.screenWidth / 2 - Village.Width / 2;
+            villageMargin.Top = GameSpace.Height / 2 - Village.Height / 2;
+            villageMargin.Left = GameSpace.Width / 2 - Village.Width / 2;
             Village.Margin = villageMargin;
 
             //Create the health box
-            healthblock.Height = 50;
+            healthblock.Height = 50 / display.RawPixelsPerViewPixel;
             healthblock.Width = Village.Width;
             healthblock.Opacity = 80;
             healthblock.Visibility = Visibility.Collapsed;
@@ -123,8 +124,8 @@ namespace GodsOfCalamityBeta
 
             //set the position of the health block to above the village
             Thickness healthMargin = new Thickness();
-            healthMargin.Top = Game1.screenHeight / 2 - Village.Height + (healthblock.Height * 2);
-            healthMargin.Left = Game1.screenWidth / 2 - Village.Width/2;
+            healthMargin.Top = GameSpace.Height / 2 - Village.Height + (healthblock.Height * 2);
+            healthMargin.Left = GameSpace.Width / 2 - Village.Width/2;
             healthblock.Margin = healthMargin;
             healthblock.HorizontalAlignment = HorizontalAlignment.Center;
             healthblock.VerticalAlignment = VerticalAlignment.Center;
@@ -314,7 +315,7 @@ namespace GodsOfCalamityBeta
             var position = entity.Get<PositionComponent>();
             float spriteWidth = (float)disaster.Width;
             float spriteHeight = (float)disaster.Height;
-            disaster.Margin = new Thickness(position.XCoor - (disaster.Width/2), position.YCoor - (disaster.Height/2), 0, 0);
+            disaster.Margin = new Thickness((position.XCoor / display.RawPixelsPerViewPixel)- (disaster.Width/2), (position.YCoor / display.RawPixelsPerViewPixel) - (disaster.Height/2), 0, 0);
         }
 
         public void UpdateFrontEnd(int entityId)
@@ -350,7 +351,7 @@ namespace GodsOfCalamityBeta
                     else
                     {
                         var position = entity.Get<PositionComponent>();
-                        disaster.Margin = new Thickness(position.XCoor - (disaster.Width / 2), position.YCoor - (disaster.Height / 2), 0, 0);
+                        disaster.Margin = new Thickness((position.XCoor / display.RawPixelsPerViewPixel) - (disaster.Width / 2), (position.YCoor / display.RawPixelsPerViewPixel) - (disaster.Height / 2), 0, 0);
                     }
                 }
                 catch { };

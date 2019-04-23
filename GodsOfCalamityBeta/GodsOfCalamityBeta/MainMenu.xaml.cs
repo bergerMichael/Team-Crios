@@ -23,18 +23,38 @@ namespace GodsOfCalamityBeta
     /// </summary>
     public sealed partial class MainMenu : Page
     {
+        public Windows.Graphics.Display.DisplayInformation display = Windows.Graphics.Display.DisplayInformation.GetForCurrentView();
+
         public MainMenu()
         {
             this.InitializeComponent();
 
-            mainMenu.Height = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Height);
-            mainMenu.Width = ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Width);
+            mainMenu.Height = ApplicationView.GetForCurrentView().VisibleBounds.Height;
+            mainMenu.Width = ApplicationView.GetForCurrentView().VisibleBounds.Width;
 
+
+            /*Title Definition*/
+            titleText.FontSize /= display.RawPixelsPerViewPixel;
             titleText.Margin = new Thickness(mainMenu.Width * .15, mainMenu.Height * .25, 0, 0);
-            logo.Margin = new Thickness(mainMenu.Width / 2 - 100, mainMenu.Height / 2 - 100, 0, 0);
-            startGame.Margin = new Thickness(mainMenu.Width / 2 - startGame.Width / 2, mainMenu.Height * .75, 0, 0);
 
+            /*Logo Definition*/
+            logo.Height /= display.RawPixelsPerViewPixel;
+            logo.Width /= display.RawPixelsPerViewPixel;
+            logo.Margin = new Thickness(mainMenu.Width / 2 - (logo.Width /2), mainMenu.Height / 2 - (logo.Height /2), 0, 0);
+
+            /*Start Game Button Definition*/
+            startGame.Height /= display.RawPixelsPerViewPixel;
+            startGame.Width /= display.RawPixelsPerViewPixel;
+            startGame.FontSize /= display.RawPixelsPerViewPixel;
+            startGame.Margin = new Thickness(mainMenu.Width * .33 - (startGame.Width * .5), mainMenu.Height - startGame.Height * 1.25, 0, 0);
             startGame.Click += StartGame_Click;
+
+            /*Exit Game Button Definition*/
+            exitGame.Height /= display.RawPixelsPerViewPixel;
+            exitGame.Width /= display.RawPixelsPerViewPixel;
+            exitGame.FontSize /= display.RawPixelsPerViewPixel;
+            exitGame.Margin = new Thickness(mainMenu.Width * .66 - (exitGame.Width * .5), mainMenu.Height - exitGame.Height * 1.25, 0, 0);
+            exitGame.Click += ExitGame_Click;
         }
 
         private void StartGame_Click(object sender, RoutedEventArgs e)
@@ -42,11 +62,16 @@ namespace GodsOfCalamityBeta
             this.Frame.Navigate(typeof(GamePage));
         }
 
+        private void ExitGame_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Exit();
+        }
+
         /// Used to scale to high DPI displays
         private float ScaleToHighDPI(float f)
         {
             Windows.Graphics.Display.DisplayInformation d = Windows.Graphics.Display.DisplayInformation.GetForCurrentView();
-            f *= (float)d.RawPixelsPerViewPixel;
+            f *= (float)d.LogicalDpi;
             return f;
         }
     }

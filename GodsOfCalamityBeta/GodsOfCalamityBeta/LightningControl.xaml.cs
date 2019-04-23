@@ -23,6 +23,7 @@ namespace GodsOfCalamityBeta
     {
         public int entityId;
         public bool toDestroy;
+        public Windows.Graphics.Display.DisplayInformation display = Windows.Graphics.Display.DisplayInformation.GetForCurrentView();
 
         public LightningControl()
         {
@@ -38,8 +39,8 @@ namespace GodsOfCalamityBeta
             var position = parentEntity.Get<PositionComponent>();
 
             toDestroy = false;
-            this.Height = sprite.Sprite.texture.Height;
-            this.Width = sprite.Sprite.texture.Width;
+            this.Height = sprite.Sprite.texture.Height / display.RawPixelsPerViewPixel;
+            this.Width = sprite.Sprite.texture.Width / display.RawPixelsPerViewPixel;
 
             this.Margin = new Thickness(position.XCoor - (Width / 2), position.YCoor - (Height / 2), 0, 0);
             //Setting Tag to identify type of disaster

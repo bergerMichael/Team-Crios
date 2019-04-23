@@ -26,7 +26,7 @@ namespace GodsOfCalamityBeta
     /// </summary>
     public sealed partial class GameOverPage : Page
     {
-
+        public Windows.Graphics.Display.DisplayInformation display = Windows.Graphics.Display.DisplayInformation.GetForCurrentView();
         public Game1 game1;
 
         public GameOverPage()
@@ -35,11 +35,17 @@ namespace GodsOfCalamityBeta
             double buttonWidthFactor = 0.2;
             double buttonHeightFactor = 0.2;
 
-            GameOverSpace.Height = Game1.ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Height);
-            GameOverSpace.Width = Game1.ScaleToHighDPI((float)ApplicationView.GetForCurrentView().VisibleBounds.Width);
+            GameOverSpace.Height = ApplicationView.GetForCurrentView().VisibleBounds.Height;
+            GameOverSpace.Width = ApplicationView.GetForCurrentView().VisibleBounds.Width;
 
             restartButton.Content = "Restart Game";
             exitButton.Content = "Exit Game";
+
+            restartButton.Height /= display.RawPixelsPerViewPixel;
+            restartButton.Width /= display.RawPixelsPerViewPixel;
+
+            exitButton.Height /= display.RawPixelsPerViewPixel;
+            exitButton.Width /= display.RawPixelsPerViewPixel;
 
             restartButton.FontFamily = new FontFamily("Castellar");
             exitButton.FontFamily = new FontFamily("Castellar");
@@ -48,17 +54,18 @@ namespace GodsOfCalamityBeta
             restartButton.BorderBrush = new SolidColorBrush(Colors.White);
             exitButton.BorderBrush = new SolidColorBrush(Colors.White);
 
-            restartButton.FontSize = 42;
-            exitButton.FontSize = 42;
+            restartButton.FontSize = 40 / display.RawPixelsPerViewPixel;
+            exitButton.FontSize = 40 / display.RawPixelsPerViewPixel;
 
-            restartButton.Height = (int)(buttonHeightFactor * (double)Game1.screenHeight);
-            restartButton.Width = (int)(buttonWidthFactor * (double)Game1.screenWidth);
-            exitButton.Height = (int)(buttonHeightFactor * (double)Game1.screenHeight);
-            exitButton.Width = (int)(buttonWidthFactor * (double)Game1.screenWidth);
+            restartButton.Height = (int)(buttonHeightFactor * GameOverSpace.Height);
+            restartButton.Width = (int)(buttonWidthFactor * GameOverSpace.Width);
+            exitButton.Height = (int)(buttonHeightFactor * GameOverSpace.Height);
+            exitButton.Width = (int)(buttonWidthFactor * GameOverSpace.Width);
 
             gameOverText.Margin = new Thickness(GameOverSpace.Width * .15, GameOverSpace.Height * .20, 0, 0);
-            Thickness restartMargin = new Thickness(Game1.screenWidth * .33 - (restartButton.Width * .5), Game1.screenHeight - restartButton.Height * 1.25, 0, 0);
-            Thickness exitMargin = new Thickness(Game1.screenWidth * .66 - (exitButton.Width * .5), Game1.screenHeight - exitButton.Height * 1.25, 0, 0);
+            gameOverText.FontSize /= display.RawPixelsPerViewPixel;
+            Thickness restartMargin = new Thickness(GameOverSpace.Width * .33 - (restartButton.Width * .5), GameOverSpace.Height - restartButton.Height * 1.25, 0, 0);
+            Thickness exitMargin = new Thickness(GameOverSpace.Width * .66 - (exitButton.Width * .5), GameOverSpace.Height - exitButton.Height * 1.25, 0, 0);
 
             restartButton.Margin = restartMargin;
             exitButton.Margin = exitMargin;

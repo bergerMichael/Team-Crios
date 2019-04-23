@@ -18,7 +18,7 @@ namespace GodsOfCalamityBeta.Systems
         private int fireSpawnInterval = 480;
         private int counter = 0;
         private int phaseLength = 1800;
-        private int maxFires = 50;
+        private int maxFires = 30;
 
         public FireSpawnSystem(AspectBuilder aspect) : base(aspect)
         {
